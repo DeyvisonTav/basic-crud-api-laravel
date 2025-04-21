@@ -1,0 +1,11 @@
+services:
+  db:
+    image: bitnami/postgresql:latest
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: basic-crud-db
+    ports:
+      - "5432:5432"
+
+
