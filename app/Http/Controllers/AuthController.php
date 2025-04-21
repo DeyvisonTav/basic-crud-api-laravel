@@ -49,15 +49,11 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
-        $expiresAt = now()->addHours(1);
-        $token->expires_at = $expiresAt;
-        $token->save();
-    
+        
         return response()->json([ 
             'user' => UserResource::make($user),
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_at' => $expiresAt,
         ]);
     }
   
