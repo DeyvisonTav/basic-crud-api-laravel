@@ -49,11 +49,15 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
-
+        $expiresAt = now()->addHours(1);
+        $token->expires_at = $expiresAt;
+        $token->save();
+    
         return response()->json([ 
             'user' => UserResource::make($user),
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'expires_at' => $expiresAt,
         ]);
     }
   
@@ -63,6 +67,19 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Deslogado com sucesso',
+        ]);
+    }
+    
+    public function refreshToken(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        $token = $request->user()->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'message' => 'Token atualizado com sucesso',
         ]);
     }
 }
