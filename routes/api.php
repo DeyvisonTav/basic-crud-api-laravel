@@ -13,9 +13,13 @@ use App\Http\Controllers\AuthController;
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
    
-   Route::middleware('guest')->group(function () {
+   Route::middleware('guest')->name('api.')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
+   });
+
+   Route::middleware('auth:sanctum')->name('api.')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
    });
 
   

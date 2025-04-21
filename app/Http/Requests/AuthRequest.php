@@ -29,7 +29,7 @@ class AuthRequest extends FormRequest
         ];
 
         // Adiciona regras extras para registro
-        if ($this->routeIs('register')) {
+        if ($this->routeIs('api.register')) {
             $rules['name'] = 'required|string|max:255';
             $rules['email'] = 'required|string|email|max:255|unique:users';
         }
